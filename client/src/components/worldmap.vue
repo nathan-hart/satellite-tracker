@@ -3,20 +3,22 @@
     <div style="height: 200px overflow: auto;"></div>
     <l-map :zoom="zoom" :center="center" :options="mapOptions" style="height: 80%" @update:center="centerUpdate" @update:zoom="zoomUpdate">
       <l-tile-layer :url="url" :attribution="attribution" />
-      <l-marker :lat-lng="withPopup">
+      <!-- <l-marker :lat-lng="withPopup">
         <l-popup> </l-popup>
-      </l-marker>
+      </l-marker> -->
     </l-map>
+    <h1>{{ satData }}</h1>
   </div>
 </template>
 
 <script>
+import axios from "axios";
 import { latLng } from "leaflet";
 import {
   LMap,
   LTileLayer,
-  LMarker,
-  LPopup,
+  // LMarker,
+  // LPopup,
   // LTooltip
 } from "vue2-leaflet";
 
@@ -25,8 +27,8 @@ export default {
   components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LPopup,
+    // LMarker,
+    // LPopup,
     // LTooltip,
   },
   data() {
@@ -42,19 +44,32 @@ export default {
       mapOptions: {
         zoomSnap: 1.5,
       },
-      showMap: true,
+      satLat: null,
+      satLong: null,
+      satData: null,
     };
   },
   methods: {
-    async getSatPos() {
-      axios.get()
-    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
     centerUpdate(center) {
       this.currentCenter = center;
     },
+    getSatPos: async function() {
+      await axios({
+        method: "get",
+        url: "http://localhost:8000/api",
+      }).then((response) => {
+        this.satData = response.data;
+        this.satLong = response.data.positions[0].satlongitude;
+        this.satLat = response.data.positions[0].satlatitude;
+        console.log(this.satLong);
+      });
+    },
+  },
+  mounted() {
+    this.getSatPos();
   },
 };
 </script>

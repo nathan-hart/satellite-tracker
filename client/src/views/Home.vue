@@ -28,7 +28,7 @@ export default {
 }
 
 #world-map {
-  max-height: 70vw;
+  height: 70vh;
   max-width: 70vw;
 }
 </style>

@@ -16,6 +16,8 @@
   text-align: center;
   color: #e9e9e9;
   background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+  height: 100%;
+  min-height: 100%;
   margin: 0px;
 }
 
