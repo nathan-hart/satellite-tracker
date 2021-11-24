@@ -1,2 +1,2 @@
 # satellite-tracker
-App for tracking satellites
+Test App for tracking satellites
